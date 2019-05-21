@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图</title>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+        }
+        li{
+            list-style: none;
+        }
+        .slider_content{
+            border:1px solid red;
+            width: 545px;
+            height: 414px;
+            position: relative;
+            margin:30px auto;
+            overflow: hidden;
+        }
+        .slider_content .slider{
+            width: 2800px;
+            height: 414px;
+            position: absolute;
+            top:0;
+            left:0;
+        }
+        .slider_content .slider li{
+            float: left;
+            position: relative;
+        }
+        .slider_content .slider li span{
+            position: absolute;
+            top: 0;
+            left:0;
+            color: #fff;
+            font-size: 35px;
+        }
+        .slider_content ul.dots{
+            position: absolute;
+            bottom: 0;
+            left:30%;
+        }
+        .slider_content ul.dots li{
+            width:25px;
+            height: 25px;
+            border-radius: 50%;
+            float: left;
+            margin:20px 0 0 20px;
+            background: red;
+            cursor: pointer;
+            color: #fff;
+            text-align: center;
+            line-height: 25px;
+        }
+        .slider_content ul.dots li.active{
+            background: green;
+        }
+        .slider_content a{
+            display: block;
+            position: absolute;
+            font-size: 40px;
+            color: #ffffff;
+            top: 50%;
+        }
+        .slider_content .left{
+            left:0;
+        }
+        .slider_content .right{
+            right:0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slider_content">
+        <ul class="slider">
+            <!--<li><img src="images/img1_03.jpg" alt=""></li>-->
+            <!--<li><img src="images/img1_03.jpg" alt=""></li>-->
+            <!--<li><img src="images/img1_03.jpg" alt=""></li>-->
+            <!--<li><img src="images/img1_03.jpg" alt=""></li>-->
+        </ul>
+        <ul class="dots">
+
+        </ul>
+        <a href="javascript:void (0)" class="left" onclick="slider.prev()">&lt;</a>
+        <a href="javascript:void (0)" class="right" onclick="slider.play()">&gt;</a>
+    </div>
+</body>
+<script src="js/jquery-2.2.4.min.js"></script>
+<script>
+    var imgs=[{'src':'images/img1_03.jpg'},{'src':'images/img1_03.jpg'},{'src':'images/img1_03.jpg'},{'src':'images/img1_03.jpg'}];
+    var slider={
+        timer:null,
+        autoPlay:true,
+        index:1,
+        init:function (index) {
+            var html='',dots='';
+            for(var i=0;i<imgs.length;i++){
+             html+='<li><span>'+i+'</span><img src="'+imgs[i].src+'"></li>';
+                dots+='<li class="'+((this.index-1)==i||(index-1)==i?'active':'')+'">'+(i+1)+'</li>';
+//                console.log(this.index)
+            }
+            html+='<li><span>5</span><img src="'+imgs[0].src+'"></li>';
+            $('.dots').html(dots);
+            $('.slider').html(html);
+        },
+        play:function () {
+            this.init();
+            this.index++;
+            if(this.index==imgs.length+1){
+                this.index=1;
+                $('.slider').css({left:0});
+            }
+            console.log(this.index);
+            $('.slider').stop().animate({left:-545*this.index+'px'},1000);
+        },
+        auto:function () {
+            this.timer=setInterval(this.play.bind(this),3000);
+        },
+        prev:function () {
+            this.init();
+            this.index--;
+            if(this.index==0){
+                this.index=imgs.length;
+            }
+            $('.slider').animate({left:-545*this.index+'px'},1000);
+        },
+        stop:function(){
+            console.log('我停止了');
+            clearInterval(this.timer);
+            console.log(this)
+        },
+        dotsPlay:function (index) {
+            this.index=index;
+            this.init();
+            this.play();
+            console.log(this.index)
+        }
+
+    }
+    slider.auto();
+//    鼠标移入事件
+    $('.slider,ul.dots').hover(function () {
+        slider.stop();
+    },function () {
+        slider.auto();
+    });
+    //两个方向按钮鼠标移出移入事件
+    $(".left,.right").mouseover(function () {
+       slider.stop();
+
+    }).mouseout(function () {
+        slider.auto();
+    });
+//    dots移入事件
+    $('.dots').on('click','li',function () {
+        var index=$(this).index();
+        index=index+1;
+        slider.dotsPlay(index);
+    })
+</script>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>circle</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            margin: 0 auto;
+        }
+        .circleProgress_wrapper{
+            width: 200px;
+            height: 200px;
+            margin: 50px auto;
+            position: relative;
+            border:1px solid #ddd;
+        }
+        .wrapper{
+            width: 100px;
+            height: 200px;
+            position: absolute;
+            top:0;
+            overflow: hidden;
+        }
+        .right{
+            right:0;
+        }
+        .left{
+            left:0;
+        }
+        .circleProgress{
+            width: 160px;
+            height: 160px;
+            border:20px solid transparent;
+            border-radius: 50%;
+            position: absolute;
+            top:0;
+            -webkit-transform: rotate(-135deg);
+        }
+        .rightcircle{
+            border-top:20px solid green;
+            border-right:20px solid green;
+            right:0;
+            -webkit-animation: circleProgressLoad_right 5s linear infinite;
+        }
+        .leftcircle{
+            border-bottom:20px solid green;
+            border-left:20px solid green;
+            left:0;
+            -webkit-animation: circleProgressLoad_left 5s linear infinite;
+        }
+        /*@-webkit-keyframes circleProgressLoad_right{*/
+            /*0%{*/
+                /*-webkit-transform: rotate(45deg);*/
+            /*}*/
+            /*50%,100%{*/
+                /*-webkit-transform: rotate(225deg);*/
+            /*}*/
+        /*}*/
+        /*@-webkit-keyframes circleProgressLoad_left{*/
+            /*0%,50%{*/
+                /*-webkit-transform: rotate(45deg);*/
+            /*}*/
+            /*100%{*/
+                /*-webkit-transform: rotate(225deg);*/
+            /*}*/
+        /*}*/
+        @-webkit-keyframes circleProgressLoad_right{
+            0%{
+                -webkit-transform: rotate(-135deg);
+            }
+            50%,100%{
+                -webkit-transform: rotate(45deg);
+            }
+        }
+        @-webkit-keyframes circleProgressLoad_left{
+            0%,50%{
+                -webkit-transform: rotate(-135deg);
+            }
+            100%{
+                -webkit-transform: rotate(45deg);
+            }
+        }
+        .video{
+            width: 600px;
+            height: 600px;
+            margin: 30px auto;
+            border:1px solid red;
+            position: relative;
+        }
+        .video video{
+            position: absolute;
+            width:100%;
+            height: 100%;
+            top:0;
+            left:0;
+            background: #000000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="video">
+    <video src="https://open.douyu.com/tpl/h5/chain2/BNESH/5221750" controls autoplay>
+        <!--<source src="http://static.xyimg.net/gamesite/gundambattle/videos/GD_pv/pv_03_h.mp4" />-->
+    </video>
+</div>
+<!--<div class="circleProgress_wrapper">-->
+    <!--<div class="wrapper right">-->
+        <!--<div class="circleProgress rightcircle"></div>-->
+    <!--</div>-->
+    <!--<div class="wrapper left">-->
+        <!--<div class="circleProgress leftcircle"></div>-->
+    <!--</div>-->
+<!--</div>-->
+<script>
+    window.addEventListener('resize',function () {
+        if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {
+            //alert(navigator.userAgent);
+            console.log(navigator.userAgent);
+
+            document.getElementsByTagName('body')[0].style.width='100%'
+        } else {
+            console.log(document.getElementsByTagName('body'))
+//        window.location.href = "pc.html";
+            document.getElementsByTagName('body')[0].style.width='750px'
+        };
+    })
+
+    function calcSecond(n){
+        var minute,seconds,hour;
+        hour=n/(60*60);
+        minute=n/60%60;
+        seconds=n%60;
+        console.log(hour,minute,seconds)
+
+    }
+    calcSecond(1000);
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>rem适配</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 1rem;
+            height: 1rem;
+            background: red;
+        }
+        span{
+            display: inline-block;
+            width:0.13rem;
+            height: 0.13rem;
+            background: green;
+        }
+        /*html 根元素字体的大小设置屏幕区域的宽*/
+    </style>
+</head>
+<body>
+<div class="box">
+    <span></span>
+</div>
+</body>
+<script>
+    window.onresize = function () {
+        console.log(111)
+//        获取整个屏幕的宽
+        var clientWidth = document.documentElement.clientWidth;
+        var htmlNode = document.querySelector('html');
+        htmlNode.style.fontSize = clientWidth + 'px';
+    }
+</script>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "demot_gulp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-mini-css": "0.0.3",
+    "gulp-postcss": "^8.0.0",
+    "gulp-uglify": "^3.0.2",
+    "postcss": "^7.0.16"
+  }
+}

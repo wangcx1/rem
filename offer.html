@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>面试题</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <!--<script>-->
+        <!--'use strict';-->
+
+        <!--/**-->
+         <!--* @param {Boolean} [normal = false] - 默认开启页面压缩以使页面高清;-->
+         <!--* @param {Number} [baseFontSize = 100] - 基础fontSize, 默认100px;-->
+         <!--* @param {Number} [fontscale = 1] - 有的业务希望能放大一定比例的字体;-->
+         <!--*/-->
+        <!--const win = window;-->
+        <!--export default win.flex.html = (normal, baseFontSize, fontscale) => {-->
+            <!--const _baseFontSize = baseFontSize || 100;-->
+            <!--const _fontscale = fontscale || 1;-->
+<!--mn-->
+            <!--const doc = win.document;-->
+            <!--const ua = navigator.userAgent;-->
+            <!--const matches = ua.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i);-->
+            <!--const UCversion = ua.match(/U3\/((\d+|\.){5,})/i);-->
+            <!--const isUCHd = UCversion && parseInt(UCversion[1].split('.').join(''), 10) >= 80;-->
+            <!--const isIos = navigator.appVersion.match(/(iphone|ipad|ipod)/gi);-->
+            <!--let dpr = win.devicePixelRatio || 1;-->
+            <!--if (!isIos && !(matches && matches[1] > 534) && !isUCHd) {-->
+                <!--// 如果非iOS, 非Android4.3以上, 非UC内核, 就不执行高清, dpr设为1;-->
+                <!--dpr = 1;-->
+            <!--}-->
+            <!--const scale = normal ? 1 : 1 / dpr;-->
+
+            <!--let metaEl = doc.querySelector('meta[name="viewport"]');-->
+            <!--if (!metaEl) {-->
+                <!--metaEl = doc.createElement('meta');-->
+                <!--metaEl.setAttribute('name', 'viewport');-->
+                <!--doc.head.appendChild(metaEl);-->
+            <!--}-->
+            <!--metaEl.setAttribute('content', `width=device-width,user-scalable=no,initial-scale=${scale},maximum-scale=${scale},minimum-scale=${scale}`);-->
+            <!--doc.documentElement.style.fontSize = normal ? '50px' : `${_baseFontSize / 2 * dpr * _fontscale}px`;-->
+        <!--};-->
+    <!--</script>-->
+    <script>
+        !function (e) {
+        function t(a) {
+            if (i[a]) return i[a].exports;
+            var n = i[a] = {exports: {}, id: a, loaded: !1};
+            return e[a].call(n.exports, n, n.exports, t), n.loaded = !0, n.exports
+        }
+
+        var i = {};
+        return t.m = e, t.c = i, t.p = "", t(0)
+    }([function (e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {value: !0});
+        var i = window;
+        t["default"] = i.flex = function (e, t) {
+            var a = e || 100, n = t || 1, r = i.document, o = navigator.userAgent,
+                d = o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i), l = o.match(/U3\/((\d+|\.){5,})/i),
+                c = l && parseInt(l[1].split(".").join(""), 10) >= 80,
+                p = navigator.appVersion.match(/(iphone|ipad|ipod)/gi), s = i.devicePixelRatio || 1;
+            p || d && d[1] > 534 || c || (s = 1);
+            var u = 1 / s, m = r.querySelector('meta[name="viewport"]');
+            m || (m = r.createElement("meta"), m.setAttribute("name", "viewport"), r.head.appendChild(m)), m.setAttribute("content", "width=device-width,user-scalable=no,initial-scale=" + u + ",maximum-scale=" + u + ",minimum-scale=" + u), r.documentElement.style.fontSize = a / 2 * s * n + "px"
+        }, e.exports = t["default"]
+    }]);
+    flex(100, 1);
+    </script>
+    <style>
+        /*一物理像素实现*/
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            height: 500%;
+        }
+        .box {
+            width: 0.5rem;
+            height: 0.5rem;
+            position: relative;
+            /*border-bottom:1px solid #000;*/
+        }
+
+        .box:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: red;
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio: 2) {
+            .box:before {
+                transform: scaleY(0.5);
+            }
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio: 3) {
+            .box:before {
+                transform: scaleY(0.3333);
+            }
+        }
+
+        /*像素比=物理像素/css像素*/
+        /*用css创建一个三角形*/
+        .trangle{
+            width:0px;
+            height: 0px;
+            border-top:76px solid red;
+            border-left:76px solid transparent;
+            border-bottom:76px solid transparent;
+            border-right:76px solid transparent;
+        }
+    </style>
+</head>
+<body>
+<div class="box"></div>
+<div class="trangle"></div>
+<button>点击</button>
+</body>
+<script>
+    //第一题：作用域
+    var num1 = 55;
+    var num2 = 66;
+
+    function f1(num, num1) {
+        //var num=55
+        //var num1=66
+        num = 100;
+        num1 = 100;
+        num2 = 100; //修改了全局的num2
+        console.log(num);//100
+        console.log(num1);//100
+        console.log(num2);//100
+    }
+
+    f1(num1, num2);
+    console.log(num1);//55
+    console.log(num2);//100
+    //console.log(num)//报错
+    //    第二题：值类型和引用类型的传递
+    function Person(name, age, salary) {
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+    }
+
+    function f1(person) {
+//        var person =p
+        person.name = 'ls';
+        person = new Person('aa', 18, 10);
+    }
+
+    var p = new Person('zs', 18, 1000);
+    console.log(p.name);//zs
+    f1(p);//
+    console.log(p.name);//ls
+    //第三题：已知字符串foo='get-element-by-id',写一个function将其转化为驼峰表示法‘getElementById’
+    function foo(str) {
+        console.log(str.split('-'));
+//      根据‘-’进行切割
+        var arr = str.split('-');
+        for (var i = 1; i < arr.length; i++) {
+            arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].substr(1, arr[i].length - 1);
+        }
+        return arr.join('');
+    }
+
+    console.log(foo('get-element-by-id'))
+    //    第四题：冒泡排序
+    var arr = [5, 4, 3, 6, 2, 2, 1];
+
+    function bubble(arr) {
+        for (var i = 0; i < arr.length - 1; i++) {
+            for (var j = 0; j < arr.length - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    var temp = arr[j]
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+        return arr;
+    }
+
+    console.log(bubble(arr))
+
+    //    第五题：反转数组
+    function reverse(arr) {
+        for (var i = 0; i < arr.length / 2; i++) {
+            var temp = arr[i];
+            arr[i] = arr[arr.length - 1 - i]
+            arr[arr.length - 1 - i] = temp;
+        }
+        return arr;
+    }
+
+    console.log(reverse([1, 2, 3]))
+
+    //  第六题  去掉数组中重复性的数字
+    function deleteRepeate(arr) {
+        var newArr = [];
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] !== arr[i + 1] && newArr.indexOf(arr[i]) == -1) {
+                newArr.push(arr[i])
+            }
+        }
+        return newArr;
+    }
+
+    console.log(deleteRepeate([1, 1, 1, 3, 3, 3, 5, 5, 5, 4, 7, 8]))
+    //    第七题：像素比
+    window.onload = function () {
+//        像素比
+        var dpr = window.devicePixelRatio;
+        var width = document.documentElement.clientWidth;
+//        缩放比例
+        var scale = 1 / dpr;
+        var metaNode = document.querySelector('meta[name="viewport"]');
+        metaNode.setAttribute("content", "width=device-width,initial-scale=" + scale + ",user-scalable=no");
+        var htmlNode = document.querySelector('html');
+        //页面中元素宽度、高度，比例反向乘回来
+        htmlNode.style.fontSize = width * dpr + 'px';
+
+    }
+//    第八题
+//    变量提升，函数提升
+//    var getName
+    function Foo() {
+        getName=function () {
+            alert(1);
+        }
+        return this;
+    }
+    Foo.getName=function () {
+        alert(2)
+    }
+    Foo.prototype.getName=function () {
+        alert(3)
+    }
+    var getName=function () {
+        alert(4)
+    }
+    function getName() {
+        alert(5)
+    }
+    //请写出以下结果
+//    Foo.getName();//2
+//    getName();//4
+//    Foo().getName();//1 window.getName()
+//    getName();//1
+//    new Foo.getName();//2 new (Foo.getName())---new (function)({alert(2)})
+//    new Foo().getName();//3 (new Foo()).getName---foo.getName()
+//    new new Foo().getName();//3 new (new Foo()).getName()----new (foo.getName)()
+//    第九题：函数节流和防抖  函数节流：当一个执行一次后，只有大于设定的执行周期后才会执行第二次。 有一个频繁触发的函数，出于优化性能角度，在规定时间内，只让函数触发的第一次生效，后面不生效
+    //节流函数  fn:节流函数  delay：规定的时间
+    function throttle(fn,delay) {
+//        记录上一次函数触发的时间
+        var lastTime=0;
+        return function () {
+            //        记录当前函数触发的时间
+            var nowTime=Date.now();
+            if(nowTime-lastTime>delay){
+                fn.call(this);
+                lastTime=nowTime;
+            }
+        }
+
+    }
+//    window.onscroll=throttle(function () {console.log('chufa'+Date.now())},2000)
+//    document.querySelector('button').onclick=throttle(function () {console.log('chufa'+Date.now())},2000);
+    //防抖函数：一个需要频繁触发的函数，在规定时间内，只让最后一次生效，前面的不生效
+    function debounce(fn,delay) {
+        //记录上一次的延时器
+        var timer=null;
+        return function () {
+            clearTimeout(timer);
+            timer= setTimeout(function () {
+                fn.call(this)
+            },delay);
+        }
+
+    }
+    document.querySelector('button').onclick=debounce(function () {
+        console.log(111111);
+    },200);
+//    跨域：
+    /*'
+    * 同源策略：是浏览器安全策略   要求协议名、域名、端口号必须完全一致
+    * 违背同源策略就会产生跨域
+    * 解决跨域：jsonp cors 服务器代理
+    * */
+    /*
+    * 1、创建一个script标签
+    * 2、设置一个回调函数
+    * */
+    var script=document.createElement('script');
+    function getDate(data) {
+//        数据请求回来被触发的函数
+        console.log(data)
+    }
+    script.src='http://localhost:3000?callback=getData';
+//    让script标签生效
+   // document.body.appendChild(script)
+//node.js事件轮询机制  借助libuv库实现的 分为6个阶段
+
+//    setTimeout(function () {
+//        console.log(11)
+//    },0);
+//    setImmediate(function () {
+//        console.log(22)
+//    });
+//    process.nextTick(function () {
+//        console.log('nextTick');
+//    });
+//    执行顺序
+    /*
+    * console.log('nextTick');
+    * console.log(11)
+    * console.log(22)
+    * */
+    /*
+    * 1、timers 定时器阶段
+    *   计时和执行到点的定时器回调函数
+    *  2、pending callbacks
+    *   某些系统操作（例如TCP错误类型）的回调函数
+    *  3、idle prepare
+    *       准备工作
+    *  4、poll 轮询阶段（轮询队列）
+    *   如果轮询队列不为空，一次同步取出轮询队列中的第一个函数执行，知道轮询队列为空或者达到系统最大的限制，如果轮询队列为空，如果之前设置过这个setImmediate函数 直接进入到下一个check阶段，如果之前没有设置过setImmediate函数，在当前poll阶段等待  知道轮询队列添加回调函数，就去第一个情况执行，如果定时器到点了，也会去下一个阶段
+    *   5、check 查阶段
+    *       执行setImmediate设置的回调函数
+    *   6、close Callback关闭阶段
+    *       close事件的回调函数
+    * */
+//从一个url地址到最终页面渲染完成，发生了什么？
+    /*1、DNS解析，将域名地址解析为IP地址  浏览器DNS缓存   系统DNS缓存  路由器DNS缓存
+    * 网络运营商缓存 递归搜索--.com域名下查找DNS解析
+    * 2、TCP链接：TCP三次握手  第一次：是由浏览器发起的，用来告诉服务器要发送请求 第二次：有服务器发起，告诉浏览器我准备接受了，你抓紧发送吧 第三次：由浏览器发起，告诉发起，我马上就发送，准备接收吧
+    * 3、发送请求   请求报文：http协议通信内容
+    * 4、接受响应： 响应报文
+    * 5、渲染页面 遇见HTML标记，浏览器调用HTML解析器解析成Token并构建成dom树  遇见style/link标记，浏览器调用css解析器，处理css标记并构建css dom树
+    * 遇见script标记，调用JavaScript解析器，处理script代码（绑定事件，修改dom树/css树）
+    *将dom树和css树合并成一个渲染树   根据渲染树来计算布局，计算每个节点的几何信息（布局）
+    * 将各个节点的颜色绘制到屏幕上（渲染）
+    *6、断开连接，TCP四次挥手
+    *   第一次挥手：由浏览器发起的，发送给服务器，我东西发送完了（请求报文），你准备关闭吧
+    *   第二次挥手：由服务器发起的，告诉浏览器，我东西接受完了（请求完了），我准备关闭了，你也准备吧
+    *   第三次挥手：由服务器发起，告诉浏览器，我东西发送完了（响应报文），你准备关闭吧
+    *   第四次挥手：由浏览器发起，告诉服务器，我东西接受完了，我准备关闭了（响应报文），你也准备吧
+    * 注意：这五个步骤不一定按照顺序执行，如果dom树被修改了，可能会执行多次布局和渲染，往往实际页面中，这些步骤都会执行多次的。
+    * */
+//闭包：封闭的容器，类似于set、map容器，存储数据的  2、闭包是一个对象，存放数据的格式：key:value
+//    闭包形成的条件：1、函数嵌套  2、内部函数引用外包函数的局部变量
+
+    function fun(n,o) {
+       console.log(o);//o=undefined,n=0
+       return {
+           fun:function (m) {
+               return fun(m,n)
+           }
+       }
+    }
+    var a=fun(0);
+    a.fun(1);//undefined,0
+    a.fun(2);//0
+    a.fun(3);//0
+    var b=fun(0).fun(1).fun(2).fun(3);//undefined,0,1,2
+    var c=fun(0).fun(1)
+    c.fun(2)
+   c.fun(3);
+//    变量提升：JS引擎在代码正式执行之前会做一个预处理的工作：1、收集变量  2、收集函数 依据：var 将var后边的变量定义但是不赋值var username=undefined;function（）{}提前定义该函数
+//    执行上下文 （execute context） 理解:代码执行的环境  时机：代码正式执行之前会进入到执行环境   作用域是代码在定义的时候产生的  工作：1、创建变量对象：变量  函数及函数的参数2、确认this的指向---全局：this--window  局部：this----调用其他的对象 3、创建作用域链  父级作用域链+当前的变量对象 4、扩展：ECOBJ={scopeChain：父级作用域链+当前的变量,变量对象：{变量，函数，函数的形参,this:{widndow||当前对象}}
+
+/*
+*宏任务：分类：setTimeout setInterval requrestAnimationFrame
+*   1、宏任务所处的队列就是宏任务队列
+*   2、一个宏任务队列中只有一个任务：执行主线程的js代码
+*   3、宏任务队列可以有多个
+*   4.当宏任务队列的任务全部执行完以后会查看是否微任务队列中的所有任务，如果微任务执行完，继续查看宏任务
+*
+* 微任务  分类：new Promise().then(回调) process.nextTick
+*   1、微任务所处的队列就是微任务队列
+*   2、只有一个微任务队列
+*   3、再上一个宏任务队列执行完毕后如果有微任务队列就会执行微任务队列中的所有任务
+* */
+console.log('-------start')
+setTimeout(()=>{console.log('setTimeout')},0);
+new Promise((resove,reject)=>{
+    for (var i=0;i<5;i++){
+        console.log(i);
+        resove();
+    }
+}).then(()=>{
+    console.log('promise实例成功回调执行')
+});
+console.log('-----end');
+</script>
+</html>

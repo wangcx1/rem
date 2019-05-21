@@ -1,0 +1,47 @@
+小程序的框架：mpvue（美团）  wepy(腾讯)
+react 和vue的区别
+相同点：
+    1、都有组件化开发和虚拟dom
+    2、都支持props进行父子间数据通信
+    3、都支持数据驱动视图，不直接操作真是的dom，更新状态数据界面就自己动更新
+    4、都支持服务器端渲染
+    5、都支持native的方案，react的react native ，vue的wexx
+ 不同点：
+    1、vue是双向数据绑定，react是单向数据
+    2、组件写法不一样，推荐的写法是jsx,vue推荐的是模板写法
+    3、状态变化，react是根据setstate  vue是data属性
+    4、vue会追踪每个组件的依赖关系，不需要重新渲染整个组件树，react 是通过生命周期shouldComponentUpdate来控制
+    5、react严格上只针对MVC的view层，而vue是MVVM
+redux
+    1、redux是一个独立专门做状态管理的JS库，不是react的插件库
+    2、它可以用在react，angular、vue中
+    3、作用：集中式管理react应用中多个组件共享状态和后台获取的数据
+redux工作原理
+    store：用来获取react组件状态  action：控制react组件的行为
+vue通信的方式
+    1、props
+        1、通过一般属性实现父向子通信
+        2、通过函数属性实现子向父通信
+    2、vue自定义事件
+        1、vue内置实现，可以代替函数类型的props
+            a、绑定监听
+            b、触发事件
+         只适合子向父
+    3、消息订阅与发布 引入pubsub-js
+        a、订阅小时：PubSub.subscribe('msg',function(msg,data){});
+        b、发布消息：PubSub.publish('msg',data)
+        可以实现任意通信
+    4、vuex
+        vuex是vue官方提供的集中式管理vue多组件共享状态数据的vue插件
+    5、slot
+
+vuex :vuex是一个专为vue.js应用程序开发的状态管理的vue插件.
+作用：集中式管理vue多个组件共享的状态和从后台获取的数据。
+vue的MVVM实现原理
+    1、vue作为MVVM模式的实现库两种技术
+        a、模板解析
+        b/、数据绑定
+    2、模板解析：实现初始化显示
+        a、解析大括号
+        b/、解析指令
+    3、数据板顶：实现更新显示

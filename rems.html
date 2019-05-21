@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>rem</title>
+    <!-- <meta name="viewport" content="width=375,initial-scale=1.0,minimum-scale=0.5,maximum-scale=5.0,user-scalable=no">   --><!--直接写px 用设计稿中的宽度/375=比例，每次页面的宽高都除比例-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            /*width: 375px;*/
+            /*margin: 0 auto;*/
+        }
+        .content1 {
+            width: 100%;
+            height: 12.2rem;
+            /*height: 610px;*/
+            background: url("images/content1_02.jpg") no-repeat center;
+            background-size: 100% ;
+        }
+
+        .content2 {
+            width: 100%;
+            /*height: 390px;*/
+            height: 7.8rem;
+            background: url("images/content2_03.jpg") no-repeat center;
+            background-size: 100% 100%;
+        }
+
+        .content3 {
+            width: 100%;
+            /*height: 874px;*/
+            height: 17.48rem;
+            background: url("images/content3_04.jpg") no-repeat center;
+            background-size: 100% 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="content1"></div>
+<div class="content2"></div>
+<div class="content3"></div>
+</body>
+<script>
+    window.onload = function () {
+//    var deviceWidth = document.documentElement.clientWidth;
+////    var dpr=window.devicePixelRatio;
+//    if(deviceWidth > 640) deviceWidth = 750;
+//    document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+
+
+//        // 适用于750的设计稿
+//        var iScale = 1;
+//        // 通过页面加载的时候去获取用户设备的物理像素比
+//        iScale = iScale / window.devicePixelRatio;
+//        // 然后来设置html的<meta>表现的缩放属性，从而达到在任意页面实现页面布局的自适应的效果
+//        document.getElementsByTagName('meta')[1].setAttribute('content', 'width=device-width,initial-scale=' + iScale + ',minimum-scale=' + iScale + ',maximum-scale=' + iScale + ',user-scalable=no');
+////    document.write('<meta name="viewport" content="width=device-width,' +
+////        'initial-scale=' + iScale + ',minimum-scale=' + iScale + ',maximum-scale=' + iScale + ',user-scalable=no" />')
+//        // 获取浏览器窗口文档显示区域的宽度，不包括滚动条。
+//        var iWidth = document.documentElement.clientWidth;
+//        // 设置页面基础的字体大小
+//        document.getElementsByTagName('html')[0].style.fontSize = iWidth / 7.5 + 'px';
+    }
+
+    var rootResize=function(){
+        var baseFontSize = 100;
+        var baseWidth = 750;
+        var minWidth=320;
+        var clientWidth = document.documentElement.clientWidth || window.innerWidth;
+        var innerWidth = Math.max(Math.min(clientWidth, baseWidth), minWidth);
+//        var mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent); // /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent); //绉诲姩绔�
+        if (window.orientation == 180 || window.orientation == 0) {
+            // 绔栧睆
+            baseWidth = 750;
+        }
+        if (window.orientation == 90 || window.orientation == -90) {
+            // 妯睆
+            baseWidth = 1334;
+        }
+
+        var rem = clientWidth/(baseWidth/baseFontSize);
+        if(innerWidth==750 || innerWidth == 1334 ||innerWidth==320){
+            rem=innerWidth/(baseWidth/baseFontSize)
+        }
+
+        document.querySelector('html').style.fontSize = rem + 'px';
+
+        // if(mobile) {
+        //     document.getElementById("wrap").style.width = "100%";
+        // }else{
+        // 	 document.getElementById("wrap").style.width = "750px";
+        // }
+    };
+    rootResize();
+    window.onresize=function(){rootResize()};
+
+</script>
+</html>
